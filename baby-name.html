@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baby Name Generator 宝宝取名 - NameGenius ✨</title>
+<meta name="description" content="Generate 10 beautiful baby names with meanings by gender, style and culture. 按性别风格文化生成宝宝名字。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="container">
+<a href="index.html" class="logo">NameGenius <span>✨</span></a>
+<div class="nav-links">
+<a href="index.html">Home 首页</a>
+<a href="baby-name.html" class="active">Baby Names 取名</a>
+<a href="name-meaning.html">Meaning 含义</a>
+<a href="nickname.html">Nickname 昵称</a>
+<a href="name-score.html">Score 评分</a>
+</div>
+</div></nav>
+
+<div class="container tool-section">
+<h2>👶 Baby Name Generator 宝宝取名</h2>
+<div class="tool-box">
+<label>Gender 性别</label>
+<div class="radio-group">
+<label><input type="radio" name="gender" value="boy" checked><span>👦 Boy 男孩</span></label>
+<label><input type="radio" name="gender" value="girl"><span>👧 Girl 女孩</span></label>
+<label><input type="radio" name="gender" value="neutral"><span>🌈 Neutral 中性</span></label>
+</div>
+<label>Style 风格</label>
+<select id="style">
+<option value="classic">Classic 经典</option>
+<option value="modern">Modern 现代</option>
+<option value="elegant">Elegant 典雅</option>
+<option value="nature">Nature 自然</option>
+<option value="strong">Strong 力量</option>
+<option value="cute">Cute 可爱</option>
+</select>
+<label>Culture 文化</label>
+<select id="culture">
+<option value="western">Western 西方</option>
+<option value="chinese">Chinese 中文</option>
+<option value="japanese">Japanese 日本</option>
+<option value="korean">Korean 韩国</option>
+<option value="latin">Latin 拉丁</option>
+<option value="arabic">Arabic 阿拉伯</option>
+</select>
+<button class="btn btn-block" onclick="generate()">✨ Generate Names 生成名字</button>
+<div class="results" id="results"></div>
+</div>
+</div>
+
+<footer><div class="container">
+<p>© 2026 NameGenius ✨</p>
+<button class="tip-btn" onclick="navigator.clipboard.writeText('0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823').then(()=>this.textContent='✅ Copied!')">☕ Tip 打赏 (ETH)</button>
+</div></footer>
+
+<script>
+const N={
+boy:{western:["James|Crown, supplanter 王冠取代者","William|Resolute protector 坚定守护者","Henry|Ruler of home 家之统治者","Alexander|Defender of people 人民守护者","Theodore|Gift of God 上帝之礼","Benjamin|Son of right hand 右手之子","Sebastian|Revered 受尊崇","Nathaniel|Gift of God 天赐之礼","Liam|Strong-willed warrior 坚毅战士","Noah|Rest, comfort 安息","Ethan|Strong, firm 坚定","Oliver|Olive tree 橄榄树","Lucas|Light 光明","Kai|Sea 大海","Finn|Fair 光明","Leo|Lion 狮子","Milo|Gracious 仁慈","Jasper|Treasurer 宝藏","Asher|Happy, blessed 幸福","Felix|Lucky 幸运","Atlas|Bearer of heaven 擎天者","Phoenix|Reborn 重生","Orion|Rising star 升起之星","River|Flowing water 流水","Sage|Wise 智慧"],
+chinese:["子轩 Zǐxuān|高贵轩昂 Noble and lofty","浩然 Hàorán|浩大正气 Vast and righteous","明哲 Míngzhé|明智聪慧 Wise and bright","俊杰 Jùnjié|才华出众 Outstanding talent","志远 Zhìyuǎn|志向远大 Ambitious","天佑 Tiānyòu|上天保佑 Heaven's blessing","睿智 Ruìzhì|睿智聪慧 Intelligent","宇航 Yǔháng|宇宙航行 Universe voyage","逸飞 Yìfēi|自在飞翔 Soaring free","星辰 Xīngchén|星辰大海 Stars and sea","墨白 Mòbái|水墨留白 Ink and white","清川 Qīngchuān|清澈河川 Clear river","一诺 Yīnuò|一诺千金 One promise","凌云 Língyún|壮志凌云 Above clouds","鹏程 Péngchéng|鹏程万里 Roc's journey","松涛 Sōngtāo|松涛阵阵 Pine waves","锦书 Jǐnshū|锦绣文章 Beautiful writing","若水 Ruòshuǐ|上善若水 Like water","北辰 Běichén|北极星 North star","长风 Chángfēng|长风破浪 Long wind"],
+japanese:["Haruto はると|Sunlight 阳光","Yuto ゆうと|Gentle person 温柔","Kaito かいと|Ocean soaring 海翔","Ren れん|Lotus, love 莲/恋","Sora そら|Sky 天空","Akira あきら|Bright 明亮","Takumi たくみ|Artisan 匠人","Haru はる|Spring 春天","Zen ぜん|Meditation 禅","Shin しん|Heart/truth 心/真","Hayate はやて|Gale 疾风","Sakura さくら|Cherry blossom 樱花","Riku りく|Land 大地","Asahi あさひ|Morning sun 朝阳","Kento けんと|Healthy soar 健翔"],
+korean:["민준 Minjun|Quick and handsome 敏捷英俊","서준 Seojun|Lucky and handsome 瑞俊","지호 Jiho|Wisdom and greatness 智浩","현우 Hyunwoo|Virtuous and cosmic 贤宇","도윤 Doyun|Path and shine 道允","하준 Hajun|Great talent 夏俊","선우 Sunwoo|First universe 先宇","지안 Jian|Wisdom and peace 智安","태양 Taeyang|Sun 太阳","한별 Hanbyul|One star 一星","성현 Sunghyun|Accomplished sage 成贤","재원 Jaewon|Talented source 才源","건우 Gunwoo|Strong universe 健宇","은우 Eunwoo|Grace universe 恩宇","시윤 Siyun|Begin and allow 始允"],
+latin:["Maximus|Greatest 至伟","Felix|Lucky, happy 幸运","Augustus|Great, venerable 尊贵","Marcus|Warlike 勇武","Aurelius|Golden 金色","Victor|Conqueror 征服者","Orion|Rising star 升起之星","Phoenix|Reborn 重生","Atlas|Bearer 承载者","Dante|Enduring 恒久","Enzo|Home ruler 家主","Luca|Light 光","Rafael|God has healed 神已治愈","Adrian|From Hadria 哈德里亚","Cassius|Hollow 空灵"],
+arabic:["Omar عمر|Flourishing 繁荣","Zain زين|Beauty, grace 美丽","Karim كريم|Generous 慷慨","Tariq طارق|Morning star 启明星","Amir أمير|Prince 王子","Khalil خليل|Friend 朋友","Yusuf يوسف|God increases 神增添","Hamza حمزة|Strong 坚强","Malik مالك|King 国王","Faris فارس|Knight 骑士","Rashid رشيد|Rightly guided 正道","Idris إدريس|Studious 好学","Rayyan ريان|Lush 丰盛","Saif سيف|Sword 剑","Badr بدر|Full moon 满月"]},
+girl:{western:["Elizabeth|God is my oath 上帝是我的誓言","Charlotte|Free woman 自由女性","Eleanor|Bright one 明亮","Victoria|Victory 胜利","Alice|Noble 高贵","Grace|Grace 优雅","Luna|Moon 月亮","Aria|Song 歌曲","Nova|New star 新星","Ivy|Climbing plant 常春藤","Willow|Willow tree 柳树","Stella|Star 星星","Genevieve|Woman of people 人民之女","Seraphina|Fiery angel 炽天使","Arabella|Yielding to prayer 回应祈祷","Aurora|Dawn 黎明","Rose|Rose 玫瑰","Violet|Purple flower 紫罗兰","Athena|Goddess of wisdom 智慧女神","Penelope|Weaver 织女"],
+chinese:["诗涵 Shīhán|诗意涵养 Poetic and inclusive","雨桐 Yǔtóng|雨中梧桐 Rain paulownia","梓萱 Zǐxuān|梓木萱草 Catalpa daylily","语嫣 Yǔyān|巧笑嫣然 Beautiful speech","清雅 Qīngyǎ|清新雅致 Elegant and pure","婉仪 Wǎnyí|温婉仪态 Graceful bearing","若兮 Ruòxī|如诗如画 Like a poem","星瑶 Xīngyáo|星光瑶池 Star jade","念安 Niàn'ān|念念平安 Peace in mind","初雪 Chūxuě|初雪纷飞 First snow","雨荷 Yǔhé|雨中荷花 Rain lotus","碧云 Bìyún|碧云天 Blue clouds","月华 Yuèhuá|月华如水 Moonlight","兰若 Lánruò|空谷幽兰 Orchid calm","倾城 Qīngchéng|倾国倾城 City beauty","玲珑 Línglóng|八面玲珑 Exquisite","冰清 Bīngqīng|冰清玉洁 Ice pure","云裳 Yúnshang|云想衣裳 Cloud dress","素心 Sùxīn|素心如兰 Pure heart","锦瑟 Jǐnsè|锦瑟华年 Brocade zither"],
+japanese:["Sakura さくら|Cherry blossom 樱花","Yui ゆい|Binding 结","Hana はな|Flower 花","Aoi あおい|Hollyhock 葵","Rin りん|Dignified 凛","Mio みお|Beautiful thread 美绪","Akari あかり|Light 明","Hinata ひなた|Sunny 阳光","Koharu こはる|Late summer 小春","Sayuri さゆり|Small lily 小百合","Hotaru ほたる|Firefly 萤火虫","Kaori かおり|Fragrance 香","Ayaka あやか|Colorful flower 彩花","Tsubaki つばき|Camellia 椿","Kaguya かぐや|Radiant night 赫夜"],
+korean:["서연 Seoyeon|Auspicious grace 瑞妍","지우 Jiwoo|Wisdom universe 智宇","하은 Haeun|Great grace 夏恩","민서 Minseo|Quick auspicious 敏瑞","수아 Sua|Excellent elegance 秀雅","채원 Chaewon|Colorful garden 彩源","아린 Arin|Graceful 雅","소율 Soyul|Bright rhythm 素律","예린 Yerin|Art gem 艺琳","한나 Hanna|Great grace 韩娜","보라 Bora|Purple 紫","미래 Mirae|Future 未来","은별 Eunbyul|Silver star 银星","유나 Yuna|Gentle 柔奈","다은 Daeun|Many blessings 多恩"],
+latin:["Aurora|Dawn 黎明","Luna|Moon 月亮","Stella|Star 星","Clara|Bright 明亮","Lucia|Light 光","Serena|Tranquil 宁静","Valentina|Strong 坚强","Aurelia|Golden 金色","Seraphina|Fiery angel 炽天使","Celestia|Heavenly 天堂","Flora|Flowers 花","Iris|Rainbow 彩虹","Vita|Life 生命","Bella|Beautiful 美丽","Alma|Soul 灵魂"],
+arabic:["Layla ليلى|Night 夜晚","Amira أميرة|Princess 公主","Zahra زهرة|Flower 花朵","Noor نور|Light 光","Yasmin ياسمين|Jasmine 茉莉","Mariam مريم|Mary 玛丽","Samira سميرة|Entertaining 有趣","Aisha عائشة|Living 活着","Zara زارا|Blooming flower 盛开","Sara سارة|Princess 公主","Rania رانيا|Queen 女王","Fatima فاطمة|Abstainer 戒者","Huda هدى|Guidance 引导","Dina دينا|Faith 信仰","Lina لينا|Tender 温柔"]},
+neutral:{western:["Alex|Defender 守护者","Jordan|Flowing down 流淌","Taylor|Tailor 裁缝","Morgan|Sea-born 海生","Casey|Brave 勇敢","Riley|Courageous 勇敢","Avery|Ruler of elves 精灵之王","Quinn|Wise 智慧","Skyler|Scholar 学者","Rowan|Little red-haired 红发","Sage|Wise herb 鼠尾草","Phoenix|Reborn 重生","River|Flowing water 流水","Emerson|Brave 勇敢","Dakota|Friendly 友善"],
+chinese:["安然 Ānrán|Peaceful 安然自得","清越 Qīngyuè|Clear and bright 清越悠扬","知秋 Zhīqiū|Know autumn 一叶知秋","沐风 Mùfēng|Bathe in wind 沐浴清风","若晨 Ruòchén|Like morning 如晨曦","予安 Yǔān|Give peace 给予安宁","晓溪 Xiǎoxī|Dawn stream 晓溪潺潺","清和 Qīnghé|Pure harmony 清风和畅","初禾 Chūhé|First grain 初禾青青","一诺 Yīnuò|One promise 一诺千金","云深 Yúnshēn|Deep clouds 云深处","之桃 Zhītáo|Of peach 桃之夭夭","时雨 Shíyǔ|Timely rain 及时雨","拾光 Shíguāng|Gather light 拾取时光","未央 Wèiyāng|Unending 长乐未央"],
+japanese:["Haru はる|Spring 春","Sora そら|Sky 天空","Yuki ゆき|Snow/courage 雪/勇","Aoi あおい|Blue/holly 蓝/葵","Ren れん|Lotus 莲","Hikari ひかり|Light 光","Nao なお|Honest 直","Michi みち|Path 道","Aki あき|Autumn 秋","Asa あさ|Morning 朝","Rio りお|Village cherry 里桜","Rui るい|Gem 宝石","Shin しん|Heart 心","Sei せい|Star 星","Jun じゅん|Pure 纯"],
+korean:["하늘 Haneul|Sky 天空","보람 Boram|Worthwhile 有意义","한결 Hangyul|Consistency 始终如一","나래 Narae|Wings 翅膀","이슬 Iseul|Dew 露珠","한빛 Hanbit|Great light 大光","슬기 Seulgi|Wisdom 智慧","별 Byul|Star 星","샘 Saem|Spring water 泉","솔 Sol|Pine 松","새봄 Saebom|New spring 新春","나루 Naru|World 世界","아름 Areum|Beauty 美","다솜 Dasom|Love 爱","미르 Mir|Dragon 龙"],
+latin:["Pax|Peace 和平","Lux|Light 光","Sol|Sun 太阳","Nova|New 新","Vesper|Evening star 晚星","Astra|Star 星","Caelum|Sky 天空","Silva|Forest 森林","Vita|Life 生命","Aria|Song 歌","Felix|Lucky 幸运","Terra|Earth 大地","Sage|Wise 智慧","Zephyr|West wind 西风","Stellan|Star 星"],
+arabic:["Noor نور|Light 光","Rihan ريحان|Sweet basil 罗勒","Shams شمس|Sun 太阳","Qamar قمر|Moon 月亮","Ihsan إحسان|Excellence 卓越","Salam سلام|Peace 和平","Farah فرح|Joy 欢乐","Hayat حياة|Life 生命","Naba نبأ|News 消息","Ruh روح|Spirit 精神","Badr بدر|Full moon 满月","Sama سماء|Sky 天空","Fajr فجر|Dawn 黎明","Nur نور|Light 光芒","Ward ورد|Rose 玫瑰"]}
+};
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function generate(){
+const gender=document.querySelector('input[name=gender]:checked').value;
+const style=document.getElementById('style').value;
+const culture=document.getElementById('culture').value;
+const pool=N[gender]?.[culture]||N.boy.western;
+const picked=shuffle([...pool]).slice(0,10);
+const html=picked.map(item=>{
+const[name,meaning]=item.split('|');
+return `<div class="result-card"><h4>${name}</h4><p>${meaning}</p></div>`;
+}).join('');
+document.getElementById('results').innerHTML=html||'<p>No results found.</p>';
+}
+</script>
+</body>
+</html>

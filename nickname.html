@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nickname Generator 昵称生成器 - NameGenius ✨</title>
+<meta name="description" content="Generate fun and unique nicknames from any name. 输入名字生成有趣独特的昵称。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="container">
+<a href="index.html" class="logo">NameGenius <span>✨</span></a>
+<div class="nav-links">
+<a href="index.html">Home 首页</a>
+<a href="baby-name.html">Baby Names 取名</a>
+<a href="name-meaning.html">Meaning 含义</a>
+<a href="nickname.html" class="active">Nickname 昵称</a>
+<a href="name-score.html">Score 评分</a>
+</div>
+</div></nav>
+
+<div class="container tool-section">
+<h2>😜 Nickname Generator 昵称生成器</h2>
+<div class="tool-box">
+<label>Enter Your Name 输入你的名字</label>
+<input type="text" id="nameInput" placeholder="e.g. Alexander, 小明, Sakura..." onkeydown="if(event.key==='Enter')gen()">
+<button class="btn btn-block" onclick="gen()">🎲 Generate Nicknames 生成昵称</button>
+<div class="results" id="results"></div>
+</div>
+</div>
+
+<footer><div class="container">
+<p>© 2026 NameGenius ✨</p>
+<button class="tip-btn" onclick="navigator.clipboard.writeText('0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823').then(()=>this.textContent='✅ Copied!')">☕ Tip 打赏 (ETH)</button>
+</div></footer>
+
+<script>
+function gen(){
+const name=document.getElementById('nameInput').value.trim();
+if(!name){document.getElementById('results').innerHTML='<p style="color:#999">Please enter a name 请输入名字</p>';return;}
+const n=name,lo=n.toLowerCase(),up=n.toUpperCase();
+const first=n.charAt(0).toUpperCase();
+const short=n.length>3?n.slice(0,3):n;
+const suffixes=['ster','kins','bear','bug','bean','pie','boo','puff','zilla','nator','inator','meister','aroo','loo','cakes','pants','muffin','berry','pop','dash'];
+const prefixes=['Big','Lil','MC','DJ','Captain','Super','Baby','Sir','Dr.','King','Queen','Chief','Boss','Lucky','Mighty'];
+const emojis=['🌟','💫','🔥','✨','💎','🎀','🍀','⚡','🦊','🐱','🦁','🌈','🎵','👑','🌸'];
+const rhymes=['Shmee','Beezy','Doodle','Noodle','Woo','Bop','Pop','Fizz','Jazz','Roo','Bear','Pie','Bug','Bee','Jay'];
+const nicks=new Set();
+// Short forms
+if(n.length>4){nicks.add(n.slice(0,Math.ceil(n.length/2)));nicks.add(n.slice(0,-2)+'y');nicks.add(n.slice(0,-1)+'ie');}
+nicks.add(short+'y');
+nicks.add(short+'ie');
+// Suffix combos
+for(let i=0;i<4;i++)nicks.add(short+suffixes[Math.floor(Math.random()*suffixes.length)]);
+// Prefix combos
+for(let i=0;i<3;i++)nicks.add(prefixes[Math.floor(Math.random()*prefixes.length)]+' '+n);
+// Rhyme
+nicks.add(first+'-'+rhymes[Math.floor(Math.random()*rhymes.length)]);
+nicks.add(n+' '+rhymes[Math.floor(Math.random()*rhymes.length)]);
+// Double
+nicks.add(short+short.toLowerCase());
+// Initial style
+nicks.add(first+'.'+n.charAt(n.length-1).toUpperCase()+'.');
+// Emoji
+nicks.add(emojis[Math.floor(Math.random()*emojis.length)]+' '+n+' '+emojis[Math.floor(Math.random()*emojis.length)]);
+// Backwards
+nicks.add(n.split('').reverse().join(''));
+// The + name
+nicks.add('The '+n);
+
+const cats=[
+{title:'🎯 Short & Sweet 简短可爱',items:[]},
+{title:'🎪 Fun & Silly 有趣搞怪',items:[]},
+{title:'👑 Cool & Stylish 酷炫时尚',items:[]},
+{title:'💫 Creative 创意十足',items:[]}
+];
+const arr=[...nicks];
+const chunk=Math.ceil(arr.length/4);
+arr.forEach((nick,i)=>cats[Math.min(Math.floor(i/chunk),3)].items.push(nick));
+
+document.getElementById('results').innerHTML=cats.map(c=>
+`<div class="result-card"><h4>${c.title}</h4><p>${c.items.join(' · ')}</p></div>`
+).join('');
+}
+</script>
+</body>
+</html>

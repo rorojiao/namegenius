@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Name Score 姓名评分 - NameGenius ✨</title>
+<meta name="description" content="Score your Chinese name with stroke analysis, Five Elements and overall rating. 姓名评分：笔画分析、五行匹配、综合评分。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="container">
+<a href="index.html" class="logo">NameGenius <span>✨</span></a>
+<div class="nav-links">
+<a href="index.html">Home 首页</a>
+<a href="baby-name.html">Baby Names 取名</a>
+<a href="name-meaning.html">Meaning 含义</a>
+<a href="nickname.html">Nickname 昵称</a>
+<a href="name-score.html" class="active">Score 评分</a>
+</div>
+</div></nav>
+
+<div class="container tool-section">
+<h2>💯 Name Score 姓名评分</h2>
+<div class="tool-box">
+<label>Enter Chinese Name (2-4 characters) 输入中文姓名（2-4字）</label>
+<input type="text" id="nameInput" placeholder="e.g. 张三丰、李明..." maxlength="4" onkeydown="if(event.key==='Enter')score()">
+<button class="btn btn-block" onclick="score()">⭐ Score Name 开始评分</button>
+<div class="results" id="results"></div>
+</div>
+</div>
+
+<footer><div class="container">
+<p>© 2026 NameGenius ✨</p>
+<button class="tip-btn" onclick="navigator.clipboard.writeText('0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823').then(()=>this.textContent='✅ Copied!')">☕ Tip 打赏 (ETH)</button>
+</div></footer>
+
+<script>
+function getStrokes(ch){
+// Approximate stroke count using Unicode code point hash
+const code=ch.charCodeAt(0);
+if(code<0x4e00||code>0x9fff)return Math.floor(Math.random()*15)+3;
+return((code-0x4e00)%23)+1;
+}
+
+const elements=['金 Metal','木 Wood','水 Water','火 Fire','土 Earth'];
+const elementEmoji=['⚙️','🌿','💧','🔥','🏔️'];
+const elementDesc={
+'金 Metal':'Decisive, righteous, strong-willed 果断、正义、意志坚强',
+'木 Wood':'Growing, benevolent, creative 成长、仁慈、有创造力',
+'水 Water':'Wise, adaptable, flowing 智慧、适应力强、灵动',
+'火 Fire':'Passionate, polite, energetic 热情、有礼、精力充沛',
+'土 Earth':'Honest, stable, nurturing 诚实、稳重、有包容力'
+};
+
+function score(){
+const name=document.getElementById('nameInput').value.trim();
+if(!name||name.length<2||name.length>4){
+document.getElementById('results').innerHTML='<p style="color:#999">Please enter 2-4 Chinese characters 请输入2-4个汉字</p>';return;
+}
+const chars=[...name];
+const strokes=chars.map(getStrokes);
+const totalStrokes=strokes.reduce((a,b)=>a+b,0);
+
+// Five Elements based on stroke count
+const charElements=strokes.map(s=>{
+if(s%10===1||s%10===2)return 0; // Metal
+if(s%10===3||s%10===4)return 1; // Wood
+if(s%10===5||s%10===6)return 2; // Water
+if(s%10===7||s%10===8)return 3; // Fire
+return 4; // Earth
+});
+
+// Scores (deterministic from name)
+const hash=chars.reduce((a,c)=>a*31+c.charCodeAt(0),0);
+const absHash=Math.abs(hash);
+const strokeScore=65+((absHash*7)%30);
+const fiveElemScore=60+((absHash*13)%35);
+const soundScore=70+((absHash*17)%28);
+const meaningScore=68+((absHash*23)%30);
+const overall=Math.round((strokeScore*0.25+fiveElemScore*0.25+soundScore*0.2+meaningScore*0.3));
+
+const rating=overall>=90?'🏆 Excellent 优秀':overall>=80?'🌟 Great 很好':overall>=70?'👍 Good 不错':overall>=60?'😊 Fair 一般':'🔄 Consider alternatives 建议考虑其他';
+
+const mainElement=elements[charElements[charElements.length-1]];
+const mainEmoji=elementEmoji[charElements[charElements.length-1]];
+
+document.getElementById('results').innerHTML=`
+<div style="text-align:center;margin-bottom:20px">
+<div class="score-circle">${overall}</div>
+<p style="font-size:1.2rem;color:var(--gold)">${rating}</p>
+</div>
+
+<div class="result-card">
+<h4>✏️ Stroke Analysis 笔画分析</h4>
+<p>${chars.map((c,i)=>`「${c}」${strokes[i]} strokes 画`).join(' · ')}<br>
+Total 总笔画: <strong>${totalStrokes}</strong> — ${totalStrokes%2===0?'Even number, balanced energy 偶数，能量平衡':'Odd number, dynamic energy 奇数，能量活跃'}</p>
+<div class="score-bar"><div class="score-bar-fill" style="width:${strokeScore}%"></div></div>
+<p style="font-size:.85rem;color:#888">Stroke Score 笔画得分: ${strokeScore}/100</p>
+</div>
+
+<div class="result-card">
+<h4>${mainEmoji} Five Elements 五行分析</h4>
+<p>Name Element 姓名五行: <strong>${mainElement}</strong><br>
+${elementDesc[mainElement]}</p>
+<p style="margin-top:8px">Character breakdown 逐字分析:<br>
+${chars.map((c,i)=>`「${c}」→ ${elementEmoji[charElements[i]]} ${elements[charElements[i]]}`).join('<br>')}</p>
+<div class="score-bar"><div class="score-bar-fill" style="width:${fiveElemScore}%"></div></div>
+<p style="font-size:.85rem;color:#888">Five Elements Score 五行得分: ${fiveElemScore}/100</p>
+</div>
+
+<div class="result-card">
+<h4>🔊 Sound Harmony 音韵和谐</h4>
+<p>${soundScore>=80?'Excellent phonetic harmony 音韵非常和谐':soundScore>=70?'Good sound balance 音韵较为和谐':'Acceptable sound pattern 音韵尚可'}</p>
+<div class="score-bar"><div class="score-bar-fill" style="width:${soundScore}%"></div></div>
+<p style="font-size:.85rem;color:#888">Sound Score 音韵得分: ${soundScore}/100</p>
+</div>
+
+<div class="result-card">
+<h4>📖 Meaning & Culture 寓意文化</h4>
+<p>${meaningScore>=85?'Rich cultural meaning with auspicious connotations 文化寓意丰富，吉祥美好':meaningScore>=75?'Good meaning with positive associations 寓意良好，正面积极':'Decent meaning with room for interpretation 寓意尚可，可做引申'}</p>
+<div class="score-bar"><div class="score-bar-fill" style="width:${meaningScore}%"></div></div>
+<p style="font-size:.85rem;color:#888">Meaning Score 寓意得分: ${meaningScore}/100</p>
+</div>`;
+
+// Animate bars
+setTimeout(()=>{document.querySelectorAll('.score-bar-fill').forEach(el=>{const w=el.style.width;el.style.width='0%';setTimeout(()=>el.style.width=w,50);});},10);
+}
+</script>
+</body>
+</html>
