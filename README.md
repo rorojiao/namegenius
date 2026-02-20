@@ -1,28 +1,31 @@
-# Name Generator & Lookup
+# NameGenius - 姓名测试打分
 
-> 🔗 **[Live Demo](https://rorojiao.github.io/namegenius/)** | Free, no ads, no signup required
+📝 姓名测试打分 - 五格分析、三才配置、姓名吉凶测试。免费在线取名测名。
 
-[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://rorojiao.github.io/namegenius/)
+**在线体验**: https://rorojiao.github.io/namegenius/
 
 ## Features
-- 🆓 100% Free - No hidden costs
-- 🔒 Privacy First - All processing happens in your browser
-- 📱 Mobile Friendly - Works on any device
-- 🌐 Multi-language Support
-- ⚡ Fast Loading - No framework dependencies
 
-## Related Tools
-| Tool | Description |
-|------|-------------|
-| [🏠 ToolHub](https://rorojiao.github.io/tool-hub/) | All 20+ tools in one place |
-| [🔧 DevToolBox](https://rorojiao.github.io/devtoolbox/) | Developer Tools |
-| [💰 CalcSmart](https://rorojiao.github.io/calcsmart/) | Financial Calculators |
-| [🔮 MysticFate](https://rorojiao.github.io/mysticfate/) | Tarot & Zodiac |
-| [🧠 PsycheTest](https://rorojiao.github.io/psychetest/) | Personality Tests |
-| [❤️ LoveMatch](https://rorojiao.github.io/lovematch/) | Love Compatibility |
+- 🌐 免费在线使用，无需下载
+- 📱 支持手机和电脑
+- 🔒 隐私安全，数据不上传
+- ⚡ 加载快速，无广告
 
-## License
-MIT
+## 相关工具
+
+| 工具 | 链接 |
+|------|------|
+| 灵算阁 AI算命 | [fortune-tools](https://rorojiao.github.io/fortune-tools/) |
+| MysticFate 塔罗占卜 | [mysticfate](https://rorojiao.github.io/mysticfate/) |
+| 心理测试 | [psychetest](https://rorojiao.github.io/psychetest/) |
+| 智算计算器 | [calcsmart](https://rorojiao.github.io/calcsmart/) |
+| 开发者工具 | [devtoolbox](https://rorojiao.github.io/devtoolbox/) |
+| 健康计算器 | [healthcalc](https://rorojiao.github.io/healthcalc/) |
+| 单位换算 | [unitswitch](https://rorojiao.github.io/unitswitch/) |
+| 日期计算 | [datecalc](https://rorojiao.github.io/datecalc/) |
+| 2048游戏 | [merge-2048](https://rorojiao.github.io/merge-2048/) |
+| 周公解梦 | [dreamoracle](https://rorojiao.github.io/dreamoracle/) |
 
 ---
-Made with ❤️ | ⭐ Star this repo if you find it useful! | [View All Tools](https://rorojiao.github.io/tool-hub/)
+
+*Built with ❤️ | [More Tools](https://rorojiao.github.io/fortune-tools/)*
